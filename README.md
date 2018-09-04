@@ -2,6 +2,13 @@
 
 Starter application for using the REST API of ePages BEYOND.
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+# Project skeleton creation steps
+
+These steps have been executed to create this project skeleton.
+You don't need to repeat them, just fork this repository and you're done!
+
 ## Install yarn
 
 ```sh
@@ -90,4 +97,38 @@ $ vue-cli-service serve
   Note that the development build is not optimized.
   To create a production build, run yarn build.
   ```
-  
+
+## Add express
+
+```sh
+$ yarn add express
+yarn add v1.9.4
+[1/4] 🔍  Resolving packages...
+[2/4] 🚚  Fetching packages...
+warning Pattern ["express@^4.16.3"] is trying to unpack in the same destination "/Users/jfischer/Library/Caches/Yarn/v2/npm-express-4.16.3-6af8a502350db3246ecc4becf6b5a34d22f7ed53" as pattern ["express@^4.16.2","express@^4.16.2"]. This could result in non-deterministic behavior, skipping.
+[3/4] 🔗  Linking dependencies...
+warning "@vue/cli-plugin-babel > babel-loader@8.0.2" has incorrect peer dependency "@babel/core@^7.0.0".
+warning "@vue/cli-plugin-babel > babel-loader@8.0.2" has unmet peer dependency "webpack@>=2".
+warning "@vue/cli-plugin-eslint > eslint-loader@2.1.0" has unmet peer dependency "webpack@>=2.0.0 <5.0.0".
+[4/4] 📃  Building fresh packages...
+success Saved lockfile.
+success Saved 1 new dependency.
+info Direct dependencies
+└─ express@4.16.3
+info All dependencies
+└─ express@4.16.3
+✨  Done in 2.99s.
+```
+
+## Add git remote to Heroku
+
+```sh
+$ heroku auth:login
+heroku: Enter your login credentials
+Email [j.fischer@epages.com]:
+Password: ***
+Logged in as j.fischer@epages.com
+
+$ heroku git:remote --app=beyond-vuejs-starter
+set git remote heroku to https://git.heroku.com/beyond-vuejs-starter.git
+```

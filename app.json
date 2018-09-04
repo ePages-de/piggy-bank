@@ -1,0 +1,27 @@
+{
+    "name": "BEYOND vue.js starter",
+    "description": "Starter application for using the REST API of ePages BEYOND.",
+    "website": "https://signup.beyondshop.cloud/",
+    "repository": "https://github.com/jensfischerhh/beyond-vuejs-starter",
+    "logo": "https://github.com/jensfischerhh/beyond-vuejs-starter/blob/master/src/assets/logo.png?raw=true",
+    "keywords": [
+        "vuejs",
+        "beyond",
+        "rest-api"
+    ],
+    "buildpacks": [
+        {
+            "url": "heroku/nodejs"
+        }
+    ],
+    "env": {
+        "NPM_CONFIG_PRODUCTION": {
+            "value": "false",
+            "description": "Only install `dependencies`, but not `devDependencies`"
+        },
+        "YARN_PRODUCTION": {
+            "value": "false",
+            "description": "Only install `dependencies`, but not `devDependencies`"
+        }
+    }
+}
