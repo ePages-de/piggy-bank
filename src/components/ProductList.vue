@@ -4,7 +4,7 @@
 
     <div>
       <ol>
-        <li v-for="product in products" v-bind:key="product.id">
+        <li v-for="product in products" v-bind:key="product._id">
           {{ product.name }}
         </li>
       </ol>
@@ -50,11 +50,6 @@ export default {
 
   methods: {
     fetchProducts: function() {
-      this.products = [];
-      this.products.push({ id: "1", name: "shoe" });
-      this.products.push({ id: "2", name: "shirt" });
-      this.products.push({ id: "3", name: "hat" });
-
       axios
         .request({
           baseURL: this.credentials.api_url,
@@ -66,8 +61,13 @@ export default {
           }
         })
         .then(response => {
-          if (response.status === 200) {
-            console.info(response);
+          if (
+            response.status === 200 &&
+            response.data &&
+            response.data._embedded &&
+            response.data._embedded.products
+          ) {
+            this.products = response.data._embedded.products;
           }
         })
         .catch(e => {
