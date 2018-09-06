@@ -45,8 +45,6 @@ import { serverBus } from '../main';
 import TokenMixin from "../mixins/TokenMixin";
 
 export default {
-  name: "Credentials",
-
   mixins: [TokenMixin],
 
   data: function() {

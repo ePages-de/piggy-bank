@@ -3,7 +3,7 @@
     <button v-on:click="fetchProducts">Fetch products</button>
 
     <div>
-      <ol>
+      <ol class="products">
         <li v-for="product in products" v-bind:key="product._id">
           {{ product.name }}
         </li>
@@ -17,10 +17,9 @@
 import { serverBus } from "../main";
 import TokenMixin from "../mixins/TokenMixin";
 import axios from "axios";
+import _ from "lodash";
 
 export default {
-  name: "ProductList",
-
   mixins: [TokenMixin],
 
   data: function() {
@@ -61,13 +60,8 @@ export default {
           }
         })
         .then(response => {
-          if (
-            response.status === 200 &&
-            response.data &&
-            response.data._embedded &&
-            response.data._embedded.products
-          ) {
-            this.products = response.data._embedded.products;
+          if (response.status === 200) {
+            this.products = _.get(response, "data._embedded.products", []);
           }
         })
         .catch(e => {
