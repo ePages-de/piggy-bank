@@ -132,3 +132,61 @@ Logged in as j.fischer@epages.com
 $ heroku git:remote --app=beyond-vuejs-starter
 set git remote heroku to https://git.heroku.com/beyond-vuejs-starter.git
 ```
+
+## Pinning to node.js version 8
+
+```sh
+$ brew unlink node
+Unlinking /usr/local/Cellar/node/10.9.0... 7 symlinks removed
+
+$ brew link --force --overwrite node@8
+Linking /usr/local/Cellar/node@8/8.11.4... 4287 symlinks created
+
+If you need to have this software first in your PATH instead consider running:
+  echo 'export PATH="/usr/local/opt/node@8/bin:$PATH"' >> ~/.bash_profile
+```
+
+### Installing axios
+
+```sh
+$ yarn add axios
+yarn add v1.9.4
+[1/5] 🔍  Validating package.json...
+[2/5] 🔍  Resolving packages...
+[3/5] 🚚  Fetching packages...
+[4/5] 🔗  Linking dependencies...
+warning "@vue/cli-plugin-babel > babel-loader@8.0.2" has incorrect peer dependency "@babel/core@^7.0.0".
+warning "@vue/cli-plugin-babel > babel-loader@8.0.2" has unmet peer dependency "webpack@>=2".
+warning "@vue/cli-plugin-eslint > eslint-loader@2.1.0" has unmet peer dependency "webpack@>=2.0.0 <5.0.0".
+[5/5] 📃  Building fresh packages...
+
+success Saved lockfile.
+success Saved 1 new dependency.
+info Direct dependencies
+└─ axios@0.18.0
+info All dependencies
+└─ axios@0.18.0
+✨  Done in 7.55s.
+```
+
+### Installing uri-templates
+
+```sh
+$ yarn add uri-templates
+yarn add v1.9.4
+[1/5] 🔍  Validating package.json...
+[2/5] 🔍  Resolving packages...
+[3/5] 🚚  Fetching packages...
+[4/5] 🔗  Linking dependencies...
+warning "@vue/cli-plugin-babel > babel-loader@8.0.2" has incorrect peer dependency "@babel/core@^7.0.0".
+warning "@vue/cli-plugin-babel > babel-loader@8.0.2" has unmet peer dependency "webpack@>=2".
+warning "@vue/cli-plugin-eslint > eslint-loader@2.1.0" has unmet peer dependency "webpack@>=2.0.0 <5.0.0".
+[5/5] 📃  Building fresh packages...
+success Saved lockfile.
+success Saved 1 new dependency.
+info Direct dependencies
+└─ uri-templates@0.2.0
+info All dependencies
+└─ uri-templates@0.2.0
+✨  Done in 3.77s.
+```

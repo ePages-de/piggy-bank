@@ -10,11 +10,13 @@
     "start": "node server.js"
   },
   "engines": {
-    "node": "8.9.x",
+    "node": "8.11.x",
     "yarn": "1.9.4"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "express": "^4.16.3",
+    "uri-templates": "^0.2.0",
     "vue": "^2.5.17"
   },
   "devDependencies": {
