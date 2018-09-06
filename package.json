@@ -18,7 +18,8 @@
     "express": "^4.16.3",
     "lodash": "^4.17.10",
     "uri-templates": "^0.2.0",
-    "vue": "^2.5.17"
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",

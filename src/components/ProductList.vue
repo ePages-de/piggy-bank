@@ -2,6 +2,12 @@
   <div>
     <button v-on:click="fetchProducts">Fetch products</button>
 
+    <ul v-if="errors && errors.length">
+      <li v-for="error of errors" v-bind:key="error.message">
+        {{ error.message }}
+      </li>
+    </ul>
+
     <div>
       <ol class="products">
         <li v-for="product in products" v-bind:key="product._id">
@@ -18,12 +24,11 @@
 <script>
 /* eslint-disable */
 import StorageMixin from "../mixins/StorageMixin";
-import TokenMixin from "../mixins/TokenMixin";
 import axios from "axios";
 import _ from "lodash";
 
 export default {
-  mixins: [StorageMixin, TokenMixin],
+  mixins: [StorageMixin],
 
   data: function() {
     return {
@@ -32,13 +37,22 @@ export default {
     };
   },
 
+  mounted: function() {
+    this.fetchProducts();
+  },
+
   methods: {
     fetchProducts: function() {
+      if (this.tokenExpired) {
+        this.$router.push("/");
+      }
+
       axios
         .request({
           baseURL: this.api_url,
-          url: "/products",
+          timeout: 5000,
           method: "GET",
+          url: "/products",
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + this.access_token.bearer
@@ -47,11 +61,13 @@ export default {
         .then(response => {
           if (response.status === 200) {
             this.products = _.get(response, "data._embedded.products", []);
+          } else {
+            this.errors.push({ message: request.statusText });
           }
         })
         .catch(e => {
           console.error(e);
-          this.errors.push(e);
+          this.errors.push({ message: "error processing request" });
         });
     },
 

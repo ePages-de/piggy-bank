@@ -2,21 +2,18 @@
   <div id="app">
     <img alt="ePages logo" src="./assets/epages.png">
     <h2>Welcome to the BEYOND vue.js Starter!</h2>
-    <Credentials/>
-    <ProductList/>
+    <ul>
+      <li><router-link to="/">login</router-link></li>
+      <li><router-link to="/products">products</router-link></li>
+    </ul>
+
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Credentials from "./components/Credentials.vue";
-import ProductList from "./components/ProductList.vue";
-
 export default {
-  name: "app",
-  components: {
-    Credentials,
-    ProductList
-  }
+  name: "app"
 };
 </script>
 
