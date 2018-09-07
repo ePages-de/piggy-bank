@@ -64,7 +64,7 @@ export default {
 
   methods: {
     fetchProducts: function() {
-      if (this.tokenExpired) {
+      if (this.tokenExpired()) {
         this.$router.push("/authorize");
       }
 

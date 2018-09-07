@@ -65,22 +65,7 @@ export default {
       }
     },
 
-    putOnSale: function() {
-      var reduced = this.product.salesPrice;
-      reduced.amount -=
-        _.get(this.product, "listPrice.amount", reduced.amount) *
-        this.reduction;
-
-      // {"op": "remove", "path": "/tags/1"}
-      var patch = [
-        { op: "add", path: "/tags/-", value: "sale" },
-        {
-          op: "replace",
-          path: "/salesPrice",
-          value: reduced
-        }
-      ];
-
+    patchProduct: function(patch) {
       axios
         .request({
           baseURL: this.api_url,
@@ -94,10 +79,10 @@ export default {
           data: patch
         })
         .then(response => {
-          if (response.status === 200) {
-            // FIXME [Vue warn]: Avoid mutating a prop directly since the value will be overwritten whenever the parent component re-renders.
-            // Instead, use a data or computed property based on the prop's value. Prop being mutated: "product"
-            this.product = response.data;
+          if (response.status === 200 && response.data) {
+            this.product.salesPrice = response.data.salesPrice;
+            this.product.listPrice = response.data.listPrice;
+            this.product.tags = response.data.tags;
           } else {
             this.errors.push({ message: request.statusText });
           }
@@ -108,7 +93,69 @@ export default {
         });
     },
 
-    removeFromSale: function() {}
+    /*
+      1.) store current salesPrice as new listPrice
+      2.) reduce salesPrice by x%
+      3.) add sale tag
+    */
+    putOnSale: function() {
+      var listPrice = {
+        amount: this.product.salesPrice.amount,
+        currency: this.product.salesPrice.currency,
+        taxModel: this.product.salesPrice.taxModel
+      };
+
+      var salesPrice = {
+        amount: listPrice.amount - listPrice.amount * this.reduction,
+        currency: listPrice.currency,
+        taxModel: listPrice.taxModel
+      };
+
+      var patch = [
+        {
+          op: "replace",
+          path: "/listPrice",
+          value: listPrice
+        },
+        {
+          op: "replace",
+          path: "/salesPrice",
+          value: salesPrice
+        },
+        { op: "add", path: "/tags/-", value: "sale" }
+      ];
+
+      this.patchProduct(patch);
+    },
+
+    /*
+      1.) store current listPrice as new salesPrice
+      2.) remove listPrice
+      3.) remove sale tag
+    */
+    removeFromSale: function() {
+      var salesPrice = {
+        amount: this.product.listPrice.amount,
+        currency: this.product.listPrice.currency,
+        taxModel: this.product.listPrice.taxModel
+      };
+
+      var patch = [
+        {
+          op: "replace",
+          path: "/salesPrice",
+          value: salesPrice
+        }, {
+          op: "remove",
+          path: "/listPrice"
+        }, {
+          op: "remove",
+          path: "/tags/-" // "/tags/1"
+        }
+      ];
+
+      this.patchProduct(patch);
+    }
   }
 };
 </script>

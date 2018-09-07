@@ -16,7 +16,7 @@
           <router-link class="nav-link" to="/products">Products</router-link>
         </li>
       </ul>
-      <span class="nav-item" v-if="access_token && access_token.debug_url">
+      <span class="nav-item" v-if="showDebug">
         <a :href="access_token.debug_url" target="jwt_debug"><img src="../assets/jwt.svg" alt="JWT" height="50"/></a>
       </span>
       <span class="nav-item" v-else>
@@ -32,6 +32,12 @@ import StorageMixin from "../mixins/StorageMixin";
 
 export default {
   mixins: [StorageMixin],
+
+  computed: {
+    showDebug: function() {
+      return this.access_token && this.access_token.debug_url;
+    }
+  }
 };
 </script>
 

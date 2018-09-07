@@ -25,7 +25,13 @@
         <input id="client_secret" class="form-control" type="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" v-model="client_secret" placeholder="enter the client_secret of your custom app">
       </div>
 
-      <button class="btn btn-primary btn-lg" v-on:click.prevent="fetchToken">Fetch token</button>
+      <div class="btn-toolbar">
+        <button class="btn btn-primary" v-on:click.prevent="fetchToken">Fetch token</button>
+        &nbsp;
+        <button class="btn btn-outline-dark" v-bind:disabled="!access_token" v-on:click.prevent="dismissToken">Dismiss token</button>
+        &nbsp;
+        <button class="btn btn-outline-danger" v-on:click.prevent="dismissAll">Dismiss all</button>
+      </div>
     </form>
   </div>
 </template>
@@ -81,6 +87,17 @@ export default {
           console.error(e);
           this.errors.push({ message: "error processing request" });
         });
+    },
+
+    dismissToken: function() {
+      this.remove("access_token");
+    },
+
+    dismissAll: function() {
+      this.remove("api_url");
+      this.remove("client_id");
+      this.remove("client_secret");
+      this.remove("access_token");
     }
   }
 };

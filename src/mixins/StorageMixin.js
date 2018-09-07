@@ -9,6 +9,15 @@ export default {
 
     store: function(name, value) {
       localStorage.setItem(name, JSON.stringify(value));
+    },
+
+    remove: function(name) {
+      localStorage.removeItem(name);
+    },
+
+    tokenExpired: function() {
+      var expiry = (this.access_token && this.access_token.expiry) || 0;
+      return new Date().getTime() > expiry;
     }
   },
 
@@ -48,10 +57,5 @@ export default {
         this.store("access_token", value);
       }
     },
-
-    tokenExpired: function() {
-      var expiry = (this.access_token && this.access_token.expiry) || 0;
-      return new Date().getTime() > expiry;
-    }
   }
 };
