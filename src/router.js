@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Home from '@/components/Home'
 import Authorize from '@/components/Authorize'
 import ProductList from '@/components/ProductList'
 
@@ -12,7 +13,7 @@ export default new VueRouter({
     {
       path: '/',
       name: 'Home',
-      component: Authorize
+      component: Home
     }, {
       path: '/authorize',
       name: 'Authorize',

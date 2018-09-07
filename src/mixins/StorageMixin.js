@@ -47,6 +47,11 @@ export default {
       set: function (value) {
         this.store("access_token", value);
       }
+    },
+
+    tokenExpired: function() {
+      var expiry = (this.access_token && this.access_token.expiry) || 0;
+      return new Date().getTime() > expiry;
     }
   }
 };

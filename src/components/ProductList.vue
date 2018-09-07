@@ -1,7 +1,8 @@
 <template>
-  <div>
+<div class="jumbotron">
     <button v-on:click="fetchProducts">Fetch products</button>
 
+    <!-- TODO style errors -->
     <ul v-if="errors && errors.length">
       <li v-for="error of errors" v-bind:key="error.message">
         {{ error.message }}
@@ -62,7 +63,7 @@ export default {
 
     fetchProducts: function() {
       if (this.tokenExpired) {
-        this.$router.push("/");
+        this.$router.push("/authorize");
       }
 
       axios
@@ -73,6 +74,11 @@ export default {
           url: "/products",
           headers: {
             Authorization: `Bearer ${this.access_token.bearer}`
+          },
+          params: {
+            sort: "name",
+            page: 0,
+            size: 100
           }
         })
         .then(response => {
