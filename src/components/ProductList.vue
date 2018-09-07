@@ -1,6 +1,7 @@
 <template>
 <div class="jumbotron">
-    <button v-on:click="fetchProducts">Fetch products</button>
+
+    <h5 class="text-center">Sale reduction: {{ reductionPercentage }}</h5>
 
     <!-- TODO style errors -->
     <ul v-if="errors && errors.length">
@@ -9,15 +10,21 @@
       </li>
     </ul>
 
-    <div>
-      <ol class="products">
-        <li v-for="product in products" v-bind:key="product._id">
-          <span class="product name">{{ product.name }} </span>&nbsp;
-          <span class="product amount">{{ product.salesPrice.amount | amount }}</span><span class="product currency" v-html="currency(product.salesPrice.currency)"></span>&nbsp;
-          <span class="product amount">{{ product.listPrice ? product.listPrice.amount : '' | amount }}</span><span class="product currency" v-html="currency(product.salesPrice.currency)"></span>&nbsp;
-          <button v-on:click="reduceSalesPrice(product, 0.15)">On Sale</button>
-        </li>
-      </ol>
+    <div class="row font-weight-bold">
+      <div class="col-1">
+      </div>
+      <div class="col-6">
+        Name
+      </div>
+      <div class="col text-right">
+        Sales Price
+      </div>
+      <div class="col text-right">
+        List Price
+      </div>
+    </div>
+    <div v-for="product in products" v-bind:key="product._id">
+      <ProductDetails v-bind:product="product" v-bind:reduction="reduction" />
     </div>
   </div>
 </template>
@@ -25,6 +32,7 @@
 <script>
 /* eslint-disable */
 import StorageMixin from "../mixins/StorageMixin";
+import ProductDetails from "./ProductDetails";
 import axios from "axios";
 import _ from "lodash";
 import numeral from "numeral";
@@ -32,9 +40,14 @@ import numeral from "numeral";
 export default {
   mixins: [StorageMixin],
 
+  components: {
+    ProductDetails
+  },
+
   data: function() {
     return {
       products: [],
+      reduction: 0.15, // TODO make dynamic
       errors: []
     };
   },
@@ -43,24 +56,13 @@ export default {
     this.fetchProducts();
   },
 
-  filters: {
-    amount: function(value) {
-      return numeral(value).format("0,0.00");
+  computed: {
+    reductionPercentage: function() {
+      return `${this.reduction * 100}%`;
     }
   },
 
   methods: {
-    currency: function(value) {
-      switch (value) {
-        case "GBP":
-          return "&pound";
-        case "EUR":
-          return "&euro;";
-        default:
-          return "???";
-      }
-    },
-
     fetchProducts: function() {
       if (this.tokenExpired) {
         this.$router.push("/authorize");
@@ -84,46 +86,6 @@ export default {
         .then(response => {
           if (response.status === 200) {
             this.products = _.get(response, "data._embedded.products", []);
-          } else {
-            this.errors.push({ message: request.statusText });
-          }
-        })
-        .catch(e => {
-          console.error(e);
-          this.errors.push({ message: "error processing request" });
-        });
-    },
-
-    reduceSalesPrice: function(product, reduction) {
-      var reduced = product.salesPrice;
-      reduced.amount -=
-        _.get(product, "listPrice.amount", reduced.amount) * reduction;
-
-      // {"op": "remove", "path": "/tags/1"}
-      var patch = [
-        { op: "add", path: "/tags/-", value: "sale" },
-        {
-          op: "replace",
-          path: "/salesPrice",
-          value: reduced
-        }
-      ];
-
-      axios
-        .request({
-          baseURL: this.api_url,
-          timeout: 5000,
-          method: "PATCH",
-          url: `/products/${product._id}`,
-          headers: {
-            "Content-Type": "application/json-patch+json",
-            Authorization: `Bearer ${this.access_token.bearer}`
-          },
-          data: patch
-        })
-        .then(response => {
-          if (response.status === 200) {
-            console.log(response.data);
           } else {
             this.errors.push({ message: request.statusText });
           }
