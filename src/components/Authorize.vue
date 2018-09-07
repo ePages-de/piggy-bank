@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <p>
-     Please enter your shop's API credentials:
-    </p>
+  <div class="jumbotron">
+    <p class="lead">Please enter your shop's API credentials:</p>
 
     <ul v-if="errors && errors.length">
       <li v-for="error of errors" v-bind:key="error.message">
@@ -29,12 +27,8 @@
       </li>
     </ul>
     <ul class="credentials container">
-      <li class="credentials left"><button v-on:click="fetchToken">Fetch token</button></li>
+      <li class="credentials left"><button class="btn btn-primary btn-lg" v-on:click="fetchToken">Fetch token</button></li>
     </ul>
-
-    <div v-if="access_token && access_token.debug_url">
-      <a :href="access_token.debug_url" target="jwt_debug"><img src="../assets/jwt.svg" alt="JWT"/></a>
-    </div>
   </div>
 </template>
 

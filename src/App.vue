@@ -1,29 +1,35 @@
 <template>
-  <div id="app">
-    <img alt="ePages logo" src="./assets/epages.png">
-    <h2>Welcome to the BEYOND vue.js Starter!</h2>
-    <ul>
-      <li><router-link to="/">login</router-link></li>
-      <li><router-link to="/products">products</router-link></li>
-    </ul>
-
+  <div id="app" class="container">
+    <NavBar/>
+    <h3>Welcome to ePages BEYOND On Sale!</h3>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+/* eslint-disable */
+import StorageMixin from "./mixins/StorageMixin";
+import NavBar from '@/components/NavBar'
+
 export default {
-  name: "app"
+  name: "app",
+
+  components: {
+    NavBar
+  },
+
+  computed: {
+    tokenExpired: function() {
+      var expiry = (this.access_token && this.access_token.expiry) || 0;
+      return new Date().getTime() > expiry;
+    }
+  }
 };
 </script>
 
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

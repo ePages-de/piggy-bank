@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Credentials from '@/components/Credentials'
+import Authorize from '@/components/Authorize'
 import ProductList from '@/components/ProductList'
 
 Vue.use(VueRouter)
@@ -11,8 +11,12 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
-      name: 'Credentials',
-      component: Credentials
+      name: 'Home',
+      component: Authorize
+    }, {
+      path: '/authorize',
+      name: 'Authorize',
+      component: Authorize
     }, {
       path: '/products',
       name: 'ProductList',

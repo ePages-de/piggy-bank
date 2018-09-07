@@ -93,8 +93,9 @@ export default {
       reduced.amount -=
         _.get(product, "listPrice.amount", reduced.amount) * reduction;
 
+      // {"op": "remove", "path": "/tags/1"}
       var patch = [
-        { op: "add", path: "/tags/-", value: "Sale" },
+        { op: "add", path: "/tags/-", value: "sale" },
         {
           op: "replace",
           path: "/salesPrice",
@@ -125,12 +126,6 @@ export default {
           console.error(e);
           this.errors.push({ message: "error processing request" });
         });
-      /*
-$ curl 'https://yourshop.api.urn/products/f925d108-379c-4923-90ab-b67563f6ba38?locale=en-GB' -i -X PATCH -H 'Content-Type: application/json-patch+json' -H 'Accept: application/hal+json' -H 'Authorization: Bearer <Access token>' 
--d '[{"op":"add","path":"/tags/-","value":"sale"},{"op":"replace","path":"/salesPrice","value":{"taxModel":"NET","amount":9.0,"currency":"EUR"}}]'
-*/
-
-      //return reduced;
     }
   }
 };
