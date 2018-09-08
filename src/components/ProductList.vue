@@ -8,10 +8,25 @@
     </ul>
 
     <div class="products">
-      <h5 class="text-center">Sale reduction: {{ reductionPercentage }}</h5>
+      <div class="row reduction">
+        <div class="col text-right">
+          <a href="#" v-on:click.prevent="decreaseReduction">
+            <fa icon="chevron-circle-down" size="2x" />
+          </a>
+        </div>
+        <div class="col-3 font-weight-bold text-center align-middle">
+          Sale reduction: {{ reduction }}%
+        </div>
+        <div class="col h-50 text-left">
+          <a href="#" v-on:click.prevent="increaseReduction">
+            <fa icon="chevron-circle-up" size="2x" />
+          </a>
+        </div>
+      </div>
+
       <ul>
         <li class="product" v-for="product in products" :key="product._id">
-          <ProductDetails :product="product" :reduction="reduction" />
+          <ProductDetails :product="product" :reduction="reduction" :errors="errors" />
         </li>
       </ul>
     </div>
@@ -34,8 +49,8 @@ export default {
 
   data: function() {
     return {
+      reduction: 15,
       products: [],
-      reduction: 0.15, // TODO make dynamic
       errors: []
     };
   },
@@ -44,13 +59,19 @@ export default {
     this.fetchProducts();
   },
 
-  computed: {
-    reductionPercentage: function() {
-      return `${this.reduction * 100}%`;
-    }
-  },
-
   methods: {
+    increaseReduction: function() {
+      if (this.reduction < 99) {
+        this.reduction += 1;
+      }
+    },
+
+    decreaseReduction: function() {
+      if (this.reduction > 1) {
+        this.reduction -= 1;
+      }
+    },
+
     fetchProducts: function() {
       if (this.tokenExpired()) {
         this.$router.push("/authorize");
@@ -75,12 +96,12 @@ export default {
           if (response.status === 200) {
             this.products = _.get(response, "data._embedded.products", []);
           } else {
-            this.errors.push({ message: request.statusText });
+            this.errors.push({ message: `error fetching products: ${request.statusText}` });
           }
         })
         .catch(e => {
           console.error(e);
-          this.errors.push({ message: "error processing request" });
+          this.errors.push({ message: "error fetching products" });
         });
     }
   }
@@ -89,7 +110,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 ul {
   list-style-type: none;
   padding: 0;

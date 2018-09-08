@@ -1,7 +1,9 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <span class="navbar-brand">
-      <img src="../assets/on-sale.jpg" height="50" alt="On Sale">
+      <router-link class="nav-link" to="/">
+        <img src="../assets/on-sale.jpg" height="50" alt="On Sale">
+      </router-link>
     </span>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">

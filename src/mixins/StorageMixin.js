@@ -56,6 +56,6 @@ export default {
       set: function (value) {
         this.store("access_token", value);
       }
-    },
+    }
   }
 };

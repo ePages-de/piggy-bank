@@ -16,11 +16,11 @@
     <div class="row">
       <div class="col-6 text-right product-sales-price">
         {{ product.salesPrice.amount | amount }}
-        <span v-html="currency(product.salesPrice.currency)"></span>
+        <span v-html="currencySymbol"></span>
       </div>
       <div class="col-6 text-left product-list-price" v-if="product.listPrice">
         {{ product.listPrice.amount | amount }}
-        <span v-html="currency(product.listPrice.currency)"></span>
+        <span v-html="currencySymbol"></span>
       </div>
       <div class="col-6" v-else>
         &nbsp;
@@ -40,13 +40,7 @@ import _ from "lodash";
 export default {
   mixins: [StorageMixin],
 
-  props: ["product", "reduction"],
-
-  data: function() {
-    return {
-      errors: []
-    };
-  },
+  props: ["product", "reduction", "errors"],
 
   computed: {
     onSale: function() {
@@ -60,8 +54,16 @@ export default {
         : "https://dummyimage.com/200x100/dedede/000000.png&text=no+image";
     },
 
-    reductionPercentage: function() {
-      return `${this.reduction * 100}%`;
+    // can't use a filter here, because of HTML escaping!
+    currencySymbol: function() {
+      switch (this.product.salesPrice.currency) {
+        case "GBP":
+          return "&pound";
+        case "EUR":
+          return "&euro;";
+        default:
+          return "???";
+      }
     }
   },
 
@@ -72,18 +74,6 @@ export default {
   },
 
   methods: {
-    // can't use a filter here, because of HTML escaping!
-    currency: function(value) {
-      switch (value) {
-        case "GBP":
-          return "&pound";
-        case "EUR":
-          return "&euro;";
-        default:
-          return "???";
-      }
-    },
-
     toggleSale: function() {
       if (this.onSale) {
         this.removeFromSale();
@@ -111,12 +101,18 @@ export default {
             this.product.listPrice = response.data.listPrice;
             this.product.tags = response.data.tags;
           } else {
-            this.errors.push({ message: request.statusText });
+            this.errors.push({
+              message: `error patching product ${this.product.sku}: ${
+                request.statusText
+              }`
+            });
           }
         })
         .catch(e => {
           console.error(e);
-          this.errors.push({ message: "error processing request" });
+          this.errors.push({
+            message: `error patching product ${this.product.sku}`
+          });
         });
     },
 
@@ -127,7 +123,9 @@ export default {
     */
     putOnSale: function() {
       if (this.onSale) {
-        this.errors.push({message: "product is already on sale"});
+        this.errors.push({
+          message: `product ${this.product.sku} is already on sale`
+        });
         return;
       }
 
@@ -138,7 +136,7 @@ export default {
       };
 
       var salesPrice = {
-        amount: listPrice.amount - listPrice.amount * this.reduction,
+        amount: listPrice.amount * (100 - this.reduction) / 100,
         currency: listPrice.currency,
         taxModel: listPrice.taxModel
       };
@@ -167,7 +165,9 @@ export default {
     */
     removeFromSale: function() {
       if (!this.onSale) {
-        this.errors.push({message: "product is not on sale"});
+        this.errors.push({
+          message: `product ${this.product.sku} is not on sale`
+        });
         return;
       }
 
