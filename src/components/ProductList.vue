@@ -5,7 +5,7 @@
 
     <!-- TODO style errors -->
     <ul v-if="errors && errors.length">
-      <li v-for="error of errors" v-bind:key="error.message">
+      <li v-for="(error, i) of errors" :key="i">
         {{ error.message }}
       </li>
     </ul>
@@ -25,8 +25,8 @@
       <div class="col-1">
       </div>
     </div>
-    <div v-for="product in products" v-bind:key="product._id">
-      <ProductDetails v-bind:product="product" v-bind:reduction="reduction" />
+    <div v-for="product in products" :key="product._id">
+      <ProductDetails :product="product" :reduction="reduction" />
     </div>
   </div>
 </template>

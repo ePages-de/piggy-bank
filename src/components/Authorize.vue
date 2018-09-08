@@ -4,7 +4,7 @@
 
     <!-- TODO style errors -->
     <ul v-if="errors && errors.length">
-      <li v-for="error of errors" v-bind:key="error.message">
+      <li v-for="(error, i) of errors" :key="i">
         {{ error.message }}
       </li>
     </ul>
@@ -12,17 +12,39 @@
     <form>
       <div class="form-group">
         <label for="api_url">API URL:</label>
-        <input id="api_url" class="form-control" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" v-model="api_url" placeholder="e.g. https://myshop.beyondshop.cloud/api">
+        <input id="api_url" class="form-control"
+          v-model="api_url"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          placeholder="e.g. https://myshop.beyondshop.cloud/api"
+        >
       </div>
 
       <div class="form-group">
         <label for="client_id">Client ID:</label>
-        <input id="client_id" class="form-control" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" v-model="client_id" placeholder="enter the client_id of your custom app">
+        <input id="client_id" class="form-control"
+          v-model="client_id"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          placeholder="enter the client_id of your custom app"
+        >
       </div>
 
       <div class="form-group">
         <label for="client_secret">Client Secret:</label>
-        <input id="client_secret" class="form-control" type="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" v-model="client_secret" placeholder="enter the client_secret of your custom app">
+        <input id="client_secret" class="form-control"
+          v-model="client_secret"
+          type="password"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          placeholder="enter the client_secret of your custom app"
+        >
       </div>
 
       <div class="btn-toolbar">

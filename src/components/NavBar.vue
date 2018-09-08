@@ -17,7 +17,9 @@
         </li>
       </ul>
       <span class="nav-item" v-if="showDebug">
-        <a :href="access_token.debug_url" target="jwt_debug"><img src="../assets/jwt.svg" alt="JWT" height="50"/></a>
+        <a :href="access_token.debug_url" target="jwt_debug">
+          <img src="../assets/jwt.svg" alt="JWT" height="50"/>
+        </a>
       </span>
       <span class="nav-item" v-else>
         <img class="grayed-out" src="../assets/jwt.svg" alt="JWT" height="50"/>
