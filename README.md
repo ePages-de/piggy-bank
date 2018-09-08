@@ -10,7 +10,6 @@ Starter application for using the REST API of ePages BEYOND.
 * error visualisation
 * better localstorage state management
 * re-structured README.md
-* express.js & HTML history API routing
 * paging
 
 # Project skeleton creation steps
