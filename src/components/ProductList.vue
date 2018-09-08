@@ -1,8 +1,5 @@
 <template>
-<div class="jumbotron">
-
-    <h5 class="text-center">Sale reduction: {{ reductionPercentage }}</h5>
-
+  <div class="jumbotron">
     <!-- TODO style errors -->
     <ul v-if="errors && errors.length">
       <li v-for="(error, i) of errors" :key="i">
@@ -10,23 +7,13 @@
       </li>
     </ul>
 
-    <div class="row font-weight-bold">
-      <div class="col">
-      </div>
-      <div class="col-6">
-        Name
-      </div>
-      <div class="col text-right">
-        List Price
-      </div>
-      <div class="col text-right">
-        Sales Price
-      </div>
-      <div class="col-1">
-      </div>
-    </div>
-    <div v-for="product in products" :key="product._id">
-      <ProductDetails :product="product" :reduction="reduction" />
+    <div class="products">
+      <h5 class="text-center">Sale reduction: {{ reductionPercentage }}</h5>
+      <ul>
+        <li class="product" v-for="product in products" :key="product._id">
+          <ProductDetails :product="product" :reduction="reduction" />
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -79,7 +66,7 @@ export default {
             Authorization: `Bearer ${this.access_token.bearer}`
           },
           params: {
-            sort: "name",
+            sort: "sku,ASC",
             page: 0,
             size: 100
           }
@@ -102,4 +89,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li.product {
+  display: inline-block;
+  margin: 10px;
+  list-style-position: inside;
+  background-color: #fff;
+  box-shadow: 2px 0px 10px #ccc;
+  padding: 5px;
+  width: 300px;
+}
 </style>

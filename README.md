@@ -8,7 +8,6 @@ Starter application for using the REST API of ePages BEYOND.
 
 * dynamic sales reduction
 * error visualisation
-* different product list visualisation
 * better localstorage state management
 * re-structured README.md
 * express.js & HTML history API routing

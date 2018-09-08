@@ -1,25 +1,30 @@
 <template>
-  <div class="product row p-1">
-    <div class="col text-center">
-      <img :src="imageLink" :alt="product.sku" height="50"/>
+  <div v-on:click="toggleSale" :class="{ sale: onSale }">
+    <div class="row">
+      <div class="col-12 text-center product-name">
+        {{ product.name }}
+      </div>
     </div>
-    <div class="col-6">
-      {{ product.name }}
+    <div class="col-12 text-center product-sku">
+      ({{ product.sku }})
     </div>
-    <div class="col text-right" v-if="product.listPrice">
-      {{ product.listPrice.amount | amount }}
-      <span v-html="currency(product.listPrice.currency)"></span>
+    <div class="row">
+      <div class="col-12 text-center product-image">
+        <img :src="imageLink" :alt="product.name"/>
+      </div>
     </div>
-    <div class="col" v-else>
-    </div>
-    <div class="col text-right">
-      <img src="favicon-16x16.png" :alt="reductionPercentage" v-if="onSale"/>
-      {{ product.salesPrice.amount | amount }} 
-      <span v-html="currency(product.salesPrice.currency)"></span>
-    </div>
-    <div class="col-1 text-left">
-      <button class="btn btn-success btn-block" v-if="onSale" v-on:click.prevent="removeFromSale">-0%</button> 
-      <button class="btn btn-danger btn-block" v-else v-on:click.prevent="putOnSale">-{{ reductionPercentage }}</button> 
+    <div class="row">
+      <div class="col-6 text-right product-sales-price">
+        {{ product.salesPrice.amount | amount }}
+        <span v-html="currency(product.salesPrice.currency)"></span>
+      </div>
+      <div class="col-6 text-left product-list-price" v-if="product.listPrice">
+        {{ product.listPrice.amount | amount }}
+        <span v-html="currency(product.listPrice.currency)"></span>
+      </div>
+      <div class="col-6" v-else>
+        &nbsp;
+      </div>
     </div>
   </div>
 </template>
@@ -30,6 +35,7 @@ import StorageMixin from "../mixins/StorageMixin";
 import axios from "axios";
 import numeral from "numeral";
 import uriTemplates from "uri-templates";
+import _ from "lodash";
 
 export default {
   mixins: [StorageMixin],
@@ -48,10 +54,10 @@ export default {
     },
 
     imageLink: function() {
-      var link = this.product._links["default-image-data"];
+      var link = _.get(this.product, "_links[default-image-data]", null);
       return link
         ? uriTemplates(link.href).fill({ width: 200, height: 100 })
-        : "https://dummyimage.com/200x100/dedede/0011ff.png&text=no+image";
+        : "https://dummyimage.com/200x100/dedede/000000.png&text=no+image";
     },
 
     reductionPercentage: function() {
@@ -75,6 +81,14 @@ export default {
           return "&euro;";
         default:
           return "???";
+      }
+    },
+
+    toggleSale: function() {
+      if (this.onSale) {
+        this.removeFromSale();
+      } else {
+        this.putOnSale();
       }
     },
 
@@ -194,4 +208,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.sale {
+  background-color: rgba(220, 20, 60, 0.15);
+}
+
+.product-name {
+  font-weight: bold;
+}
+
+.sale .product-sales-price {
+  color: crimson;
+}
+
+.product-list-price {
+  text-decoration: line-through;
+}
 </style>
