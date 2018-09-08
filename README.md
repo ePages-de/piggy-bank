@@ -4,6 +4,14 @@ Starter application for using the REST API of ePages BEYOND.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
+## TODOs
+
+* json patch test
+* dynamic sales reduction
+* better localstorage state management
+* express.js & HTML history API routing
+* paging
+
 # Project skeleton creation steps
 
 These steps have been executed to create this project skeleton.

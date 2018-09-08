@@ -11,16 +11,18 @@
     </ul>
 
     <div class="row font-weight-bold">
-      <div class="col-1">
+      <div class="col">
       </div>
       <div class="col-6">
         Name
       </div>
       <div class="col text-right">
-        Sales Price
+        List Price
       </div>
       <div class="col text-right">
-        List Price
+        Sales Price
+      </div>
+      <div class="col-1">
       </div>
     </div>
     <div v-for="product in products" v-bind:key="product._id">

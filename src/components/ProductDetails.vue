@@ -1,19 +1,25 @@
 <template>
   <div class="product row p-1">
-    <div class="col-1">
-      <button class="btn btn-danger" v-if="onSale" v-on:click.prevent="removeFromSale">{{ reductionPercentage }}</button> 
-      <button class="btn btn-warning" v-else v-on:click.prevent="putOnSale">{{ reductionPercentage }}</button> 
+    <div class="col text-center">
+      <img :src="imageLink" :alt="product.sku" height="50"/>
     </div>
     <div class="col-6">
       {{ product.name }}
     </div>
+    <div class="col text-right" v-if="product.listPrice">
+      {{ product.listPrice.amount | amount }}
+      <span v-html="currency(product.listPrice.currency)"></span>
+    </div>
+    <div class="col" v-else>
+    </div>
     <div class="col text-right">
+      <img src="favicon-16x16.png" :alt="reductionPercentage" v-if="onSale"/>
       {{ product.salesPrice.amount | amount }} 
       <span v-html="currency(product.salesPrice.currency)"></span>
     </div>
-    <div class="col text-right">
-      {{ product.listPrice ? product.listPrice.amount : '' | amount }}
-      <span v-html="currency(product.salesPrice.currency)"></span>
+    <div class="col-1 text-left">
+      <button class="btn btn-success btn-block" v-if="onSale" v-on:click.prevent="removeFromSale">-0%</button> 
+      <button class="btn btn-danger btn-block" v-else v-on:click.prevent="putOnSale">-{{ reductionPercentage }}</button> 
     </div>
   </div>
 </template>
@@ -24,6 +30,7 @@ import StorageMixin from "../mixins/StorageMixin";
 import axios from "axios";
 import _ from "lodash";
 import numeral from "numeral";
+import uriTemplates from "uri-templates";
 
 export default {
   mixins: [StorageMixin],
@@ -39,6 +46,13 @@ export default {
   computed: {
     onSale: function() {
       return this.product.tags && this.product.tags.includes("sale");
+    },
+
+    imageLink: function() {
+      var link = this.product._links["default-image-data"];
+      return link
+        ? uriTemplates(link.href).fill({ width: 200, height: 100 })
+        : "https://dummyimage.com/200x100/dedede/0011ff.png&text=no+image";
     },
 
     reductionPercentage: function() {
@@ -145,10 +159,12 @@ export default {
           op: "replace",
           path: "/salesPrice",
           value: salesPrice
-        }, {
+        },
+        {
           op: "remove",
           path: "/listPrice"
-        }, {
+        },
+        {
           op: "remove",
           path: "/tags/-" // "/tags/1"
         }
