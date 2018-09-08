@@ -1,8 +1,12 @@
 <template>
 <div class="jumbotron">
-  <h3 class="text-center">Welcome to ePages BEYOND On Sale!</h3>
+  <h3 class="text-center">Welcome to Piggy Bank!</h3>
 
-  <p class="lead">
+  <p class="text-center piggy-bank">
+    <fa icon="piggy-bank" size="8x" :transform="{ rotate: -15 }" />
+  </p>
+
+  <p class="lead align-middle">
     How to use this app:
   </p>
 

@@ -82,7 +82,7 @@ export default {
       }
     },
 
-    patchProduct: function(patch) {
+    patchProduct: async function(patch) {
       axios
         .request({
           baseURL: this.api_url,
@@ -209,7 +209,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .sale {
-  background-color: rgba(220, 20, 60, 0.15);
+  background-color: lightpink;
 }
 
 .product-name {

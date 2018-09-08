@@ -72,7 +72,7 @@ export default {
       }
     },
 
-    fetchProducts: function() {
+    fetchProducts: async function() {
       if (this.tokenExpired()) {
         this.$router.push("/authorize");
       }

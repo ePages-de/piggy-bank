@@ -20,6 +20,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.3.1",
     "@fortawesome/vue-fontawesome": "^0.1.1",
     "axios": "^0.18.0",
+    "bootstrap-vue": "^2.0.0-rc.11",
     "express": "^4.16.3",
     "lodash": "^4.17.10",
     "numeral": "^2.0.6",

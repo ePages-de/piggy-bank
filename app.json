@@ -1,9 +1,9 @@
 {
-    "name": "BEYOND vue.js starter",
+    "name": "Piggy Bank",
     "description": "Starter application for using the REST API of ePages BEYOND.",
     "website": "https://signup.beyondshop.cloud/",
     "repository": "https://github.com/jensfischerhh/beyond-vuejs-starter",
-    "logo": "https://github.com/jensfischerhh/beyond-vuejs-starter/blob/master/src/assets/logo.png?raw=true",
+    "logo": "https://github.com/jensfischerhh/beyond-vuejs-starter/blob/master/src/assets/piggy-bank.png?raw=true",
     "keywords": [
         "vuejs",
         "beyond",

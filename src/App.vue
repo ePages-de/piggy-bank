@@ -7,12 +7,9 @@
 
 <script>
 /* eslint-disable */
-import StorageMixin from "./mixins/StorageMixin";
 import NavBar from "@/components/NavBar";
 
 export default {
-  name: "app",
-
   components: {
     NavBar
   }
@@ -22,5 +19,9 @@ export default {
 <style>
 #app {
   color: #2c3e50;
+}
+
+.piggy-bank {
+  color: lightpink !important;
 }
 </style>

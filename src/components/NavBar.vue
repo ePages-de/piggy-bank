@@ -1,9 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <span class="navbar-brand">
-      <router-link class="nav-link" to="/">
-        <img src="../assets/on-sale.jpg" height="50" alt="On Sale">
-      </router-link>
+    <span class="navbar-brand piggy-bank">
+      <fa icon="piggy-bank" size="2x" spin />
     </span>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
