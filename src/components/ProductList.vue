@@ -37,7 +37,6 @@ import StorageMixin from "../mixins/StorageMixin";
 import ProductDetails from "./ProductDetails";
 import axios from "axios";
 import _ from "lodash";
-import numeral from "numeral";
 
 export default {
   mixins: [StorageMixin],

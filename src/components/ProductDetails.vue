@@ -28,7 +28,6 @@
 /* eslint-disable */
 import StorageMixin from "../mixins/StorageMixin";
 import axios from "axios";
-import _ from "lodash";
 import numeral from "numeral";
 import uriTemplates from "uri-templates";
 
@@ -113,6 +112,11 @@ export default {
       3.) add sale tag
     */
     putOnSale: function() {
+      if (this.onSale) {
+        this.errors.push({message: "product is already on sale"});
+        return;
+      }
+
       var listPrice = {
         amount: this.product.salesPrice.amount,
         currency: this.product.salesPrice.currency,
@@ -148,13 +152,25 @@ export default {
       3.) remove sale tag
     */
     removeFromSale: function() {
+      if (!this.onSale) {
+        this.errors.push({message: "product is not on sale"});
+        return;
+      }
+
       var salesPrice = {
         amount: this.product.listPrice.amount,
         currency: this.product.listPrice.currency,
         taxModel: this.product.listPrice.taxModel
       };
 
+      var saleTagIndex = this.product.tags.findIndex(tag => tag === "sale");
+
       var patch = [
+        {
+          op: "test",
+          path: `/tags/${saleTagIndex}`,
+          value: "sale"
+        },
         {
           op: "replace",
           path: "/salesPrice",
@@ -166,7 +182,7 @@ export default {
         },
         {
           op: "remove",
-          path: "/tags/-" // "/tags/1"
+          path: `/tags/${saleTagIndex}`
         }
       ];
 

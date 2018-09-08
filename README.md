@@ -6,9 +6,11 @@ Starter application for using the REST API of ePages BEYOND.
 
 ## TODOs
 
-* json patch test
 * dynamic sales reduction
+* error visualisation
+* different product list visualisation
 * better localstorage state management
+* re-structured README.md
 * express.js & HTML history API routing
 * paging
 
