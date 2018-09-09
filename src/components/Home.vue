@@ -30,7 +30,7 @@
         Put <router-link to="/products">your products</router-link> on sale.
       </li>
     </ol>
-  </div>    
+  </div>
 </template>
 
 <script>

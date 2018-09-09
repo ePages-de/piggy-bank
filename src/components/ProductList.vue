@@ -1,11 +1,14 @@
 <template>
   <div class="jumbotron">
-    <!-- TODO style errors -->
-    <ul v-if="errors && errors.length">
-      <li v-for="(error, i) of errors" :key="i">
-        {{ error.message }}
-      </li>
-    </ul>
+    <!-- https://bootstrap-vue.js.org/docs/components/alert/ -->
+    <div v-if="errors && errors.length">
+      <div v-for="(error, i) of errors" :key="i">
+        <b-alert variant="danger" dismissible :show="true">
+          <h5 class="alert-heading">Something bad happened!</h5>
+          <p>{{ error.message }}</p>
+        </b-alert>
+      </div>
+    </div>
 
     <div class="products">
       <div class="row reduction">
@@ -25,7 +28,7 @@
       </div>
 
       <ul>
-        <li class="product" v-for="product in products" :key="product._id">
+        <li class="product p-1 m-2" v-for="product in products" :key="product._id">
           <ProductDetails :product="product" :reduction="reduction" :errors="errors" />
         </li>
       </ul>
@@ -78,19 +81,19 @@ export default {
       }
 
       const getProducts = {
-          baseURL: this.api_url,
-          timeout: 5000,
-          method: "GET",
-          url: "/products",
-          headers: {
-            Authorization: `Bearer ${this.access_token.bearer}`
-          },
-          params: {
-            sort: "sku,ASC",
-            page: 0,
-            size: 100
-          }
-        };
+        baseURL: this.api_url,
+        timeout: 5000,
+        method: "GET",
+        url: "/products",
+        headers: {
+          Authorization: `Bearer ${this.access_token.bearer}`
+        },
+        params: {
+          sort: "sku,ASC",
+          page: 0,
+          size: 100
+        }
+      };
 
       axios
         .request(getProducts)
@@ -98,7 +101,9 @@ export default {
           if (response.status === 200) {
             this.products = _.get(response, "data._embedded.products", []);
           } else {
-            this.errors.push({ message: `error fetching products: ${request.statusText}` });
+            this.errors.push({
+              message: `error fetching products: ${request.statusText}`
+            });
           }
         })
         .catch(e => {
@@ -112,18 +117,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
 li.product {
   display: inline-block;
-  margin: 10px;
-  list-style-position: inside;
-  background-color: #fff;
-  box-shadow: 2px 0px 10px #ccc;
-  padding: 5px;
-  width: 300px;
 }
 </style>

@@ -1,13 +1,16 @@
 <template>
   <div class="jumbotron">
-    <p class="lead text-center">Please enter your shop's API credentials:</p>
+    <!-- https://bootstrap-vue.js.org/docs/components/alert/ -->
+    <div v-if="errors && errors.length">
+      <div v-for="(error, i) of errors" :key="i">
+        <b-alert variant="danger" dismissible :show="true">
+          <h5 class="alert-heading">Something bad happened!</h5>
+          <p>{{ error.message }}</p>
+        </b-alert>
+      </div>
+    </div>
 
-    <!-- TODO style errors -->
-    <ul v-if="errors && errors.length">
-      <li v-for="(error, i) of errors" :key="i">
-        {{ error.message }}
-      </li>
-    </ul>
+    <p class="lead text-center">Please enter your shop's API credentials:</p>
 
     <form>
       <div class="form-group">
@@ -109,7 +112,7 @@ export default {
         })
         .catch(e => {
           console.error(e);
-          this.errors.push({ message: "error processing request" });
+          this.errors.push({ message: "error fetching token" });
         });
     },
 

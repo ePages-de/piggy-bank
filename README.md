@@ -6,7 +6,6 @@ Starter application for using the REST API of ePages BEYOND.
 
 ## TODOs
 
-* error visualisation
 * better localstorage state management
 * re-structured README.md
 * paging

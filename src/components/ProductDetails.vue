@@ -1,30 +1,22 @@
 <template>
-  <div v-on:click="toggleSale" :class="{ sale: onSale }">
-    <div class="row">
-      <div class="col-12 text-center product-name">
-        {{ product.name }}
-      </div>
+  <div class="card text-center" v-on:click="toggleSale" :class="{ sale: onSale }">
+    <h5 class="card-title">
+      {{ product.name }}
+    </h5>
+    <h6 class="card-subtitle text-muted">
+      SKU: {{ product.sku }}
+    </h6>
+    <div class="card-body">
+      <img class="card-img-top p-2" :src="imageLink" :alt="product.name"/>
     </div>
-    <div class="col-12 text-center product-sku">
-      ({{ product.sku }})
-    </div>
-    <div class="row">
-      <div class="col-12 text-center product-image">
-        <img :src="imageLink" :alt="product.name"/>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-6 text-right product-sales-price">
-        {{ product.salesPrice.amount | amount }}
-        <span v-html="currencySymbol"></span>
-      </div>
-      <div class="col-6 text-left product-list-price" v-if="product.listPrice">
-        {{ product.listPrice.amount | amount }}
-        <span v-html="currencySymbol"></span>
-      </div>
-      <div class="col-6" v-else>
-        &nbsp;
-      </div>
+    <div class="card-footer">
+      Price:
+      <span class="product-sales-price">
+        <span v-html="currencySymbol" />{{ product.salesPrice.amount | amount }}
+      </span>
+      <span class="strike-through text-muted" v-if="product.listPrice">
+        <span v-html="currencySymbol" />{{ product.listPrice.amount | amount }}
+      </span>
     </div>
   </div>
 </template>
@@ -50,8 +42,8 @@ export default {
     imageLink: function() {
       var link = _.get(this.product, "_links[default-image-data]", null);
       return link
-        ? uriTemplates(link.href).fill({ width: 200, height: 100 })
-        : "https://dummyimage.com/200x100/dedede/000000.png&text=no+image";
+        ? uriTemplates(link.href).fill({ height: 200 })
+        : "https://dummyimage.com/400x200/ffffff/0011ff.png&text=no+image";
     },
 
     // can't use a filter here, because of HTML escaping!
@@ -210,19 +202,26 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.sale {
-  background-color: lightpink;
+.product .card {
+  width: 20vw;
+  height: 35vw;
+  box-shadow: 2px 0px 10px #ccc;
+  cursor: pointer;
 }
 
-.product-name {
-  font-weight: bold;
+.product .card-img-top {
+  height: 80%;
+}
+
+.sale {
+  background-color: lightpink;
 }
 
 .sale .product-sales-price {
   color: crimson;
 }
 
-.product-list-price {
+.strike-through {
   text-decoration: line-through;
 }
 </style>
