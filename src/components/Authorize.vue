@@ -1,14 +1,6 @@
 <template>
   <div class="jumbotron">
-    <!-- https://bootstrap-vue.js.org/docs/components/alert/ -->
-    <div v-if="errors && errors.length">
-      <div v-for="(error, i) of errors" :key="i">
-        <b-alert variant="danger" dismissible :show="true">
-          <h5 class="alert-heading">Something bad happened!</h5>
-          <p>{{ error.message }}</p>
-        </b-alert>
-      </div>
-    </div>
+    <Alerts :alerts="alerts" />
 
     <p class="lead text-center">Please enter your shop's API credentials:</p>
 
@@ -63,15 +55,20 @@
 
 <script>
 /* eslint-disable */
-import StorageMixin from "../mixins/StorageMixin";
+import StorageMixin from "@/mixins/StorageMixin";
+import Alerts from "@/components/Alerts";
 import axios from "axios";
 
 export default {
   mixins: [StorageMixin],
 
+  components: {
+    Alerts
+  },
+
   data: function() {
     return {
-      errors: []
+      alerts: []
     };
   },
 
@@ -107,12 +104,12 @@ export default {
               }`
             };
           } else {
-            this.errors.push({ message: request.statusText });
+            this.alerts.push({ message: request.statusText });
           }
         })
         .catch(e => {
           console.error(e);
-          this.errors.push({ message: "error fetching token" });
+          this.alerts.push({ message: "error fetching token" });
         });
     },
 

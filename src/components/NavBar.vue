@@ -30,7 +30,7 @@
 
 <script>
 /* eslint-disable */
-import StorageMixin from "../mixins/StorageMixin";
+import StorageMixin from "@/mixins/StorageMixin";
 
 export default {
   mixins: [StorageMixin],
