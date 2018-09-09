@@ -1,20 +1,21 @@
 <template>
   <div class="card text-center" v-on:click="toggleSale" :class="{ sale: onSale }">
-    <h5 class="card-title">
-      {{ product.name }}
-    </h5>
-    <h6 class="card-subtitle text-muted">
-      SKU: {{ product.sku }}
-    </h6>
     <div class="card-body">
-      <img class="card-img-top p-2" :src="imageLink" :alt="product.name"/>
+      <h5 class="card-title">
+        {{ product.name }}
+      </h5>
+      <h6 class="card-subtitle text-muted">
+        SKU: {{ product.sku }}
+      </h6>
+      <div class="card-text">
+        <img class="card-img-top img-thumbnail p-0 m-0" :src="imageLink" :alt="product.name"/>
+      </div>
     </div>
-    <div class="card-footer">
-      Price:
-      <span class="product-sales-price">
+    <div class="card-footer bg-white">
+      <span class="sales-price">
         <span v-html="currencySymbol" />{{ product.salesPrice.amount | amount }}
       </span>
-      <span class="strike-through text-muted" v-if="product.listPrice">
+      <span class="list-price text-muted" v-if="product.listPrice">
         <span v-html="currencySymbol" />{{ product.listPrice.amount | amount }}
       </span>
     </div>
@@ -42,7 +43,7 @@ export default {
     imageLink: function() {
       var link = _.get(this.product, "_links[default-image-data]", null);
       return link
-        ? uriTemplates(link.href).fill({ height: 200 })
+        ? uriTemplates(link.href).fill({ width: 400, height: 200 })
         : "https://dummyimage.com/400x200/ffffff/0011ff.png&text=no+image";
     },
 
@@ -210,26 +211,26 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.product .card {
-  width: 20vw;
-  height: 35vw;
-  box-shadow: 2px 0px 10px #ccc;
+.card {
+  width: 17vw;
+  height: 30vw;
+  box-shadow: 2px 0px 10px #aaa;
   cursor: pointer;
 }
 
-.product .card-img-top {
+.card-img-top {
   height: 80%;
 }
 
-.sale {
-  background-color: lightpink;
+.sale, .sale .card-footer {
+  background-color: lightpink !important;
 }
 
-.sale .product-sales-price {
+.sale .sales-price {
   color: crimson;
 }
 
-.strike-through {
+.sale .list-price {
   text-decoration: line-through;
 }
 </style>

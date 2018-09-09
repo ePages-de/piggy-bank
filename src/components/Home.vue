@@ -27,7 +27,7 @@
         Fetch an <tt>oauth token</tt> by <router-link to="/authorize">authorizing</router-link>.
       </li>
       <li>
-        Put <router-link to="/products">your products</router-link> on sale.
+        Put <router-link to="/products?page=0&size=20">your products</router-link> on sale.
       </li>
     </ol>
   </div>

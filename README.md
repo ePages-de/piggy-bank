@@ -42,7 +42,7 @@ $ yarn -v
 [Fork the repository](https://github.com/jensfischerhh/beyond-vuejs-starter/fork) and clone it onto your local machine:
 
 ```sh
-$ git clone https://github.com/that-is-your-account/beyond-vuejs.starter.git
+$ git clone https://github.com/that-is-your-account/beyond-vuejs-starter.git
 
 $ cd beyond-vuejs-starter
 ```
@@ -109,6 +109,5 @@ $ git push heroku master
 ### TODOs
 
 * better localstorage state management
-* paging
-* cockpit & storefront links
 * rename and move GitHub repo
+* paging

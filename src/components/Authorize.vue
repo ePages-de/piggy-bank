@@ -97,14 +97,12 @@ export default {
           ) {
             this.access_token = {
               bearer: response.data.access_token,
-              // (issued at + expires in) converted to milliseconds, see https://en.wikipedia.org/wiki/JSON_Web_Token#Standard_fields
-              expiry: (response.data.iat + response.data.expires_in) * 1000,
-              debug_url: `https://jwt.io/#debugger-io?token=${
-                response.data.access_token
-              }`
+              // (issued at + expires in) converted to milliseconds,
+              // see https://en.wikipedia.org/wiki/JSON_Web_Token#Standard_fields
+              expiry: (response.data.iat + response.data.expires_in) * 1000
             };
           } else {
-            this.alerts.push({ message: request.statusText });
+            this.alerts.push({ message: `error fetching token: ${request.statusText}` });
           }
         })
         .catch(e => {

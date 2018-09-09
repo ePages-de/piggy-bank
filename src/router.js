@@ -21,7 +21,7 @@ export default new VueRouter({
     }, {
       path: '/products',
       name: 'ProductList',
-      props: true,
+      props: (route) => ({ page: route.query.page, size: route.query.size }),
       component: ProductList
     }
   ]

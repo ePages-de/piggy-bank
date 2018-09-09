@@ -2,10 +2,10 @@
   <div class="jumbotron">
     <Alerts :alerts="alerts" />
 
-    <div class="products">
-      <div class="row reduction">
+    <div>
+      <div class="row">
         <div class="col text-right">
-          <a href="#" v-on:click.prevent="decreaseReduction">
+          <a href="#" v-on:click.prevent="reduction--" class="piggy-bank">
             <fa icon="chevron-circle-down" size="2x" />
           </a>
         </div>
@@ -13,14 +13,14 @@
           Sale reduction: {{ reduction }}%
         </div>
         <div class="col h-50 text-left">
-          <a href="#" v-on:click.prevent="increaseReduction">
+          <a href="#" v-on:click.prevent="reduction++" class="piggy-bank">
             <fa icon="chevron-circle-up" size="2x" />
           </a>
         </div>
       </div>
 
-      <ul>
-        <li class="product p-1 m-2" v-for="product in products" :key="product._id">
+      <ul class="list-inline text-center">
+        <li class="p-0 m-1 list-inline-item" v-for="product in products" :key="product._id">
           <ProductDetails :product="product" :reduction="reduction" :alerts="alerts" />
         </li>
       </ul>
@@ -44,6 +44,8 @@ export default {
     ProductDetails
   },
 
+  props: ["page", "size"],
+
   data: function() {
     return {
       reduction: 15,
@@ -57,18 +59,6 @@ export default {
   },
 
   methods: {
-    increaseReduction: function() {
-      if (this.reduction < 99) {
-        this.reduction += 1;
-      }
-    },
-
-    decreaseReduction: function() {
-      if (this.reduction > 1) {
-        this.reduction -= 1;
-      }
-    },
-
     fetchProducts: async function() {
       if (this.tokenExpired()) {
         this.$router.push("/authorize");
@@ -84,8 +74,8 @@ export default {
         },
         params: {
           sort: "sku,ASC",
-          page: 0,
-          size: 100
+          page: this.page || 0,
+          size: this.size || 20
         }
       };
 
@@ -111,7 +101,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-li.product {
-  display: inline-block;
-}
 </style>

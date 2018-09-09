@@ -1,7 +1,9 @@
 <template>
   <div id="app" class="container">
     <NavBar/>
-    <router-view></router-view>
+    <transition name="fade">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -19,5 +21,11 @@ export default {
 <style>
 .piggy-bank {
   color: lightpink !important;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>

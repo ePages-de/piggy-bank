@@ -1,37 +1,42 @@
 <template>
-  <b-navbar toggleable="md" type="light" variant="light">
-    <b-navbar-brand>
-      <router-link to="/" target="_self">
-        <fa icon="piggy-bank" class="piggy-bank" size="2x" spin />
-      </router-link>
+  <b-navbar toggleable="lg" sticky="true" type="dark" variant="secondary">
+    <b-navbar-brand to="/">
+      <fa icon="piggy-bank" class="piggy-bank" size="2x" spin />
     </b-navbar-brand>
 
-    <b-navbar-nav>
+    <b-navbar-nav class="font-weight-bold">
       <b-nav-item to="/authorize">Authorize</b-nav-item>
-      <b-nav-item to="/products">Products</b-nav-item>
+      <b-nav-item to="/products?page=0&size=20">Products</b-nav-item>
     </b-navbar-nav>
 
     <!-- Right aligned nav items -->
-    <b-navbar-nav class="ml-auto">
+    <b-navbar-nav class="ml-auto font-weight-bold">
       <b-nav-item-dropdown text="Links" right>
-        <b-dropdown-item :href="storefrontLink" :disabled="storefrontLink === '#'" target="storefront">Storefront</b-dropdown-item>
-        <b-dropdown-item :href="cockpitLink" :disabled="cockpitLink === '#'" target="cockpit">Cockpit</b-dropdown-item>
+        <b-dropdown-item :href="storefrontLink" :disabled="disableStorefrontLink" target="storefront">
+          Storefront
+        </b-dropdown-item>
+        <b-dropdown-item :href="cockpitLink" :disabled="disableCockpitLink" target="cockpit">
+          Cockpit
+        </b-dropdown-item>
         <div class="dropdown-divider"></div>
-        <b-dropdown-item href="https://docs.beyondshop.cloud" target="beyond-api">BEYOND REST API</b-dropdown-item>
-        <b-dropdown-item href="https://vuejs.org/v2/api/" target="vuejs-api">vue.js API</b-dropdown-item>
-        <b-dropdown-item href="https://kapeli.com/cheat_sheets/Axios.docset/Contents/Resources/Documents/index" target="axios-api">axios API</b-dropdown-item>
-        <b-dropdown-item href="https://bootstrap-vue.js.org/docs/" target="bootstrap-vue">bootstrap-vue</b-dropdown-item>
+        <b-dropdown-item href="https://docs.beyondshop.cloud" target="beyond-api">
+          BEYOND REST API
+        </b-dropdown-item>
+        <b-dropdown-item href="https://vuejs.org/v2/api/" target="vuejs-api">
+          vue.js API
+        </b-dropdown-item>
+        <b-dropdown-item href="https://kapeli.com/cheat_sheets/Axios.docset/Contents/Resources/Documents/index" target="axios-api">
+          axios API
+        </b-dropdown-item>
+        <b-dropdown-item href="https://bootstrap-vue.js.org/docs/" target="bootstrap-vue">
+          bootstrap-vue
+        </b-dropdown-item>
       </b-nav-item-dropdown>
 
       <b-navbar-item>
-        <span v-if="showDebug">
-          <a :href="access_token.debug_url" target="jwt_debug">
-            <img src="../assets/jwt.svg" alt="JWT" height="50"/>
-          </a>
-        </span>
-        <span v-else>
-          <img class="grayed-out" src="../assets/jwt.svg" alt="JWT" height="50"/>
-        </span>
+        <a :href="jwtLink" :class="{ disabled: disableJwtLink }" :disabled="disableJwtLink" target="jwt-debug">
+          <img src="../assets/jwt.svg" alt="JWT" height="50" :class="{ 'grayed-out': disableJwtLink }"/>
+        </a>
       </b-navbar-item>
     </b-navbar-nav>
   </b-navbar>
@@ -45,28 +50,42 @@ export default {
   mixins: [StorageMixin],
 
   computed: {
-    showDebug: function() {
-      return this.access_token && this.access_token.debug_url;
-    },
-
     storefrontLink: function() {
       return this.api_url
         ? this.api_url.substring(0, this.api_url.lastIndexOf("/"))
         : "#";
     },
 
+    disableStorefrontLink: function() {
+      return this.api_url === null;
+    },
+
     cockpitLink: function() {
       return this.api_url
         ? `${this.api_url.substring(0, this.api_url.lastIndexOf("/"))}/cockpit/`
         : "#";
-    }
+    },
+
+    disableCockpitLink: function() {
+      return this.api_url === null;
+    },
+
+    jwtLink: function() {
+      return this.access_token
+        ? `https://jwt.io/#debugger-io?token=${this.access_token.bearer}`
+        : "#";
+    },
+    
+    disableJwtLink: function() {
+      return this.access_token === null;
+    } 
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-img.grayed-out {
+.grayed-out {
   opacity: 0.2;
 }
 </style>
