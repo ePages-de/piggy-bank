@@ -83,18 +83,20 @@ export default {
     },
 
     patchProduct: async function(patch) {
+      const patchProduct = {
+        baseURL: this.api_url,
+        timeout: 5000,
+        method: "PATCH",
+        url: `/products/${this.product._id}`,
+        headers: {
+          "Content-Type": "application/json-patch+json",
+          Authorization: `Bearer ${this.access_token.bearer}`
+        },
+        data: patch
+      };
+
       axios
-        .request({
-          baseURL: this.api_url,
-          timeout: 5000,
-          method: "PATCH",
-          url: `/products/${this.product._id}`,
-          headers: {
-            "Content-Type": "application/json-patch+json",
-            Authorization: `Bearer ${this.access_token.bearer}`
-          },
-          data: patch
-        })
+        .request(patchProduct)
         .then(response => {
           if (response.status === 200 && response.data) {
             this.product.salesPrice = response.data.salesPrice;

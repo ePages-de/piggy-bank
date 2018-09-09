@@ -77,8 +77,7 @@ export default {
         this.$router.push("/authorize");
       }
 
-      axios
-        .request({
+      const getProducts = {
           baseURL: this.api_url,
           timeout: 5000,
           method: "GET",
@@ -91,7 +90,10 @@ export default {
             page: 0,
             size: 100
           }
-        })
+        };
+
+      axios
+        .request(getProducts)
         .then(response => {
           if (response.status === 200) {
             this.products = _.get(response, "data._embedded.products", []);

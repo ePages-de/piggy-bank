@@ -1,14 +1,14 @@
 <template>
-<div class="jumbotron">
-  <h3 class="text-center">Welcome to Piggy Bank!</h3>
+  <div class="jumbotron">
+    <h3 class="text-center">Welcome to Piggy Bank!</h3>
 
-  <p class="text-center piggy-bank">
-    <fa icon="piggy-bank" size="8x" :transform="{ rotate: -15 }" />
-  </p>
+    <p class="text-center piggy-bank">
+      <fa icon="piggy-bank" size="8x" :transform="{ rotate: -15 }" />
+    </p>
 
-  <p class="lead align-middle">
-    How to use this app:
-  </p>
+    <p class="lead align-middle">
+      How to use this app:
+    </p>
 
     <ol>
       <li>
@@ -30,7 +30,7 @@
         Put <router-link to="/products">your products</router-link> on sale.
       </li>
     </ol>
-</div>    
+  </div>    
 </template>
 
 <script>

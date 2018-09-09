@@ -17,10 +17,6 @@ export default {
 </script>
 
 <style>
-#app {
-  color: #2c3e50;
-}
-
 .piggy-bank {
   color: lightpink !important;
 }

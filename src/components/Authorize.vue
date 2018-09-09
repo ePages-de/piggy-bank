@@ -74,20 +74,22 @@ export default {
 
   methods: {
     fetchToken: async function() {
+      const postOauthToken = {
+        baseURL: this.api_url,
+        timeout: 5000,
+        method: "POST",
+        url: "/oauth/token",
+        params: {
+          grant_type: "client_credentials"
+        },
+        auth: {
+          username: this.client_id,
+          password: this.client_secret
+        }
+      };
+
       axios
-        .request({
-          baseURL: this.api_url,
-          timeout: 5000,
-          method: "POST",
-          url: "/oauth/token",
-          params: {
-            grant_type: "client_credentials"
-          },
-          auth: {
-            username: this.client_id,
-            password: this.client_secret
-          }
-        })
+        .request(postOauthToken)
         .then(response => {
           if (
             response.status === 200 &&
