@@ -1,147 +1,21 @@
-# beyond-vuejs-starter
+# Piggy Bank
 
-Starter application for using the REST API of ePages BEYOND.
+Demo application for using the REST API of ePages BEYOND.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-## TODOs
+## How to use
 
-* better localstorage state management
-* re-structured README.md
-* paging
+These instructions target a Mac OS X development environment.
+If you are a Linux or Windows user, you will need to figure out the details yourself.
 
-# Project skeleton creation steps
+### Install and pin node.js version 8
 
-These steps have been executed to create this project skeleton.
-You don't need to repeat them, just fork this repository and you're done!
-
-## Install yarn
+It might be that you have already node.js version 10 installed. In order to properly use this app, you need to install and pin node.js version 8. Don't ask me why, frontend experts told me so ;-)
 
 ```sh
-$ brew install yarn
+$ brew install node@8
 
-$ yarn -v
-1.9.4
-```
-
-## Install vue CLI
-
-Following the [online docs](https://cli.vuejs.org/guide/installation.html#installation):
-
-```sh
-$ yarn global add @vue/cli
-yarn global v1.9.4
-[1/4] 🔍  Resolving packages...
-[2/4] 🚚  Fetching packages...
-[3/4] 🔗  Linking dependencies...
-[4/4] 📃  Building fresh packages...
-success Installed "@vue/cli@3.0.1" with binaries:
-      - vue
-✨  Done in 22.14s.
-
-$ vue --version
-3.0.1
-```
-
-## Creating the project skeleton
-
-Options described in the [online docs](https://cli.vuejs.org/guide/creating-a-project.html#creating-a-project)
-
-```sh
-$ vue create --no-git --packageManager yarn --default beyond-vuejs-starter
-
-Vue CLI v3.0.1
-✨  Creating project in /Users/jfischer/dev/git/beyond-vuejs-starter.
-⚙  Installing CLI plugins. This might take a while...
-
-yarn install v1.9.4
-info No lockfile found.
-[1/4] 🔍  Resolving packages...
-[2/4] 🚚  Fetching packages...
-[3/4] 🔗  Linking dependencies...
-
-success Saved lockfile.
-✨  Done in 17.30s.
-🚀  Invoking generators...
-📦  Installing additional dependencies...
-
-yarn install v1.9.4
-[1/4] 🔍  Resolving packages...
-[2/4] 🚚  Fetching packages...
-[3/4] 🔗  Linking dependencies...
-[4/4] 📃  Building fresh packages...
-
-success Saved lockfile.
-✨  Done in 3.71s.
-⚓  Running completion hooks...
-
-📄  Generating README.md...
-
-🎉  Successfully created project beyond-vuejs-starter.
-👉  Get started with the following commands:
-
- $ cd beyond-vuejs-starter
- $ yarn serve
-```
-
-## Launch the project
-
-```sh
-$ yarn serve
-
-yarn run v1.9.4
-$ vue-cli-service serve
- INFO  Starting development server...
- 98% after emitting CopyPlugin
-
- DONE  Compiled successfully in 2650ms
-
-  App running at:
-  - Local:   http://localhost:8080/
-  - Network: http://172.21.129.0:8080/
-
-  Note that the development build is not optimized.
-  To create a production build, run yarn build.
-  ```
-
-## Add express
-
-```sh
-$ yarn add express
-yarn add v1.9.4
-[1/4] 🔍  Resolving packages...
-[2/4] 🚚  Fetching packages...
-warning Pattern ["express@^4.16.3"] is trying to unpack in the same destination "/Users/jfischer/Library/Caches/Yarn/v2/npm-express-4.16.3-6af8a502350db3246ecc4becf6b5a34d22f7ed53" as pattern ["express@^4.16.2","express@^4.16.2"]. This could result in non-deterministic behavior, skipping.
-[3/4] 🔗  Linking dependencies...
-warning "@vue/cli-plugin-babel > babel-loader@8.0.2" has incorrect peer dependency "@babel/core@^7.0.0".
-warning "@vue/cli-plugin-babel > babel-loader@8.0.2" has unmet peer dependency "webpack@>=2".
-warning "@vue/cli-plugin-eslint > eslint-loader@2.1.0" has unmet peer dependency "webpack@>=2.0.0 <5.0.0".
-[4/4] 📃  Building fresh packages...
-success Saved lockfile.
-success Saved 1 new dependency.
-info Direct dependencies
-└─ express@4.16.3
-info All dependencies
-└─ express@4.16.3
-✨  Done in 2.99s.
-```
-
-## Add git remote to Heroku
-
-```sh
-$ heroku auth:login
-heroku: Enter your login credentials
-Email [j.fischer@epages.com]:
-Password: ***
-Logged in as j.fischer@epages.com
-
-$ heroku git:remote --app=beyond-vuejs-starter
-set git remote heroku to https://git.heroku.com/beyond-vuejs-starter.git
-```
-
-## Pinning to node.js version 8
-
-```sh
 $ brew unlink node
 Unlinking /usr/local/Cellar/node/10.9.0... 7 symlinks removed
 
@@ -152,47 +26,89 @@ If you need to have this software first in your PATH instead consider running:
   echo 'export PATH="/usr/local/opt/node@8/bin:$PATH"' >> ~/.bash_profile
 ```
 
-### Installing axios
+### Install yarn
+
+npm is dead, long live yarn! Frontend experts told me so ;-)
 
 ```sh
-$ yarn add axios
-yarn add v1.9.4
-[1/5] 🔍  Validating package.json...
-[2/5] 🔍  Resolving packages...
-[3/5] 🚚  Fetching packages...
-[4/5] 🔗  Linking dependencies...
-warning "@vue/cli-plugin-babel > babel-loader@8.0.2" has incorrect peer dependency "@babel/core@^7.0.0".
-warning "@vue/cli-plugin-babel > babel-loader@8.0.2" has unmet peer dependency "webpack@>=2".
-warning "@vue/cli-plugin-eslint > eslint-loader@2.1.0" has unmet peer dependency "webpack@>=2.0.0 <5.0.0".
-[5/5] 📃  Building fresh packages...
+$ brew install yarn
 
-success Saved lockfile.
-success Saved 1 new dependency.
-info Direct dependencies
-└─ axios@0.18.0
-info All dependencies
-└─ axios@0.18.0
-✨  Done in 7.55s.
+$ yarn -v
+1.9.4
 ```
 
-### Installing uri-templates
+### Fork this repository on GitHub
+
+[Fork the repository](https://github.com/jensfischerhh/beyond-vuejs-starter/fork) and clone it onto your local machine:
 
 ```sh
-$ yarn add uri-templates
-yarn add v1.9.4
-[1/5] 🔍  Validating package.json...
-[2/5] 🔍  Resolving packages...
-[3/5] 🚚  Fetching packages...
-[4/5] 🔗  Linking dependencies...
-warning "@vue/cli-plugin-babel > babel-loader@8.0.2" has incorrect peer dependency "@babel/core@^7.0.0".
-warning "@vue/cli-plugin-babel > babel-loader@8.0.2" has unmet peer dependency "webpack@>=2".
-warning "@vue/cli-plugin-eslint > eslint-loader@2.1.0" has unmet peer dependency "webpack@>=2.0.0 <5.0.0".
-[5/5] 📃  Building fresh packages...
-success Saved lockfile.
-success Saved 1 new dependency.
-info Direct dependencies
-└─ uri-templates@0.2.0
-info All dependencies
-└─ uri-templates@0.2.0
-✨  Done in 3.77s.
+$ git clone https://github.com/that-is-your-account/beyond-vuejs.starter.git
+
+$ cd beyond-vuejs-starter
 ```
+
+### Run the application locally
+
+```sh
+$ yarn serve
+yarn run v1.9.4
+$ vue-cli-service serve
+ INFO  Starting development server...
+ 98% after emitting CopyPlugin
+
+ DONE  Compiled successfully in 4193ms                                                                                                                                                         12:17:47 PM
+
+  App running at:
+  - Local:   http://localhost:8080/
+  - Network: http://192.168.2.46:8080/
+
+  Note that the development build is not optimized.
+  To create a production build, run yarn build.
+
+$ open http://localhost:8080
+```
+
+### Optional: deploy to Heroku
+
+After [creating your own Heroku account](https://signup.heroku.com/), you can click the "Deploy to Heroku" button from your GitHub fork website.
+
+### Optional: add git remote to Heroku
+
+If you want to deploy your latest changes directly to Heroku, you need to set it up just like any another git remote.
+
+```sh
+$ brew install heroku
+
+$ heroku auth:login
+heroku: Enter your login credentials
+Email [that-is-you@email.com]:
+Password: ***
+Logged in as that-is-you@email.com
+
+$ heroku git:remote --app=this-is-your-heroku-app
+set git remote heroku to https://git.heroku.com/this-is-your-heroku-app.git
+
+$ git push heroku master
+```
+
+### Useful links
+
+* [BEYOND REST API](https://docs.beyondshop.cloud) documentation
+* [vue.js guide](https://vuejs.org/v2/guide/)
+* [vue.js API](https://vuejs.org/v2/api/)
+* [axios cheat sheet](https://kapeli.com/cheat_sheets/Axios.docset/Contents/Resources/Documents/index)
+* [Bootstrap CSS](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
+* [boostrap-vue](https://bootstrap-vue.js.org/docs/)
+* [Font Awesome & vue.js](https://fontawesome.com/how-to-use/on-the-web/using-with/vuejs)
+* [Font Awesome free icons](https://fontawesome.com/icons?d=gallery&m=free)
+* [Visual Studio Code](https://code.visualstudio.com/)
+* [Vetur plugin](https://vuejs.github.io/vetur/) for VS Code
+* [vue-devtools](https://github.com/vuejs/vue-devtools) Chrome Extension
+* [Heroku](https://heroku.com)
+
+### TODOs
+
+* better localstorage state management
+* paging
+* cockpit & storefront links
+* rename and move GitHub repo
