@@ -102,14 +102,8 @@ export default {
       axios
         .request(getProducts)
         .then(response => {
-          if (response.status === 200) {
-            this.totalPages = _.get(response, "data.page.totalPages", 5);
-            this.products = _.get(response, "data._embedded.products", []);
-          } else {
-            this.errors.push({
-              message: `error fetching products: ${request.statusText}`
-            });
-          }
+          this.totalPages = _.get(response, "data.page.totalPages", 5);
+          this.products = _.get(response, "data._embedded.products", []);
         })
         .catch(e => {
           console.error(e);

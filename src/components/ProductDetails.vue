@@ -178,17 +178,9 @@ export default {
       axios
         .request(patchProduct)
         .then(response => {
-          if (response.status === 200 && response.data) {
-            this.product.salesPrice = response.data.salesPrice;
-            this.product.listPrice = response.data.listPrice;
-            this.product.tags = response.data.tags;
-          } else {
-            this.alerts.push({
-              message: `error patching product ${this.product.sku}: ${
-                request.statusText
-              }`
-            });
-          }
+          this.product.salesPrice = response.data.salesPrice;
+          this.product.listPrice = response.data.listPrice;
+          this.product.tags = response.data.tags;
         })
         .catch(e => {
           console.error(e);

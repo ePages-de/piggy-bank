@@ -123,22 +123,13 @@ export default {
       axios
         .request(postOauthToken)
         .then(response => {
-          if (
-            response.status === 200 &&
-            response.data.token_type === "bearer"
-          ) {
-            this.access_token = {
-              bearer: response.data.access_token,
-              // (issued at + expires in) converted to milliseconds,
-              // see https://en.wikipedia.org/wiki/JSON_Web_Token#Standard_fields
-              expiry: (response.data.iat + response.data.expires_in) * 1000
-            };
-            this.persistAccessToken();
-          } else {
-            this.alerts.push({
-              message: `error fetching token: ${request.statusText}`
-            });
-          }
+          this.access_token = {
+            bearer: response.data.access_token,
+            // (issued at + expires in) converted to milliseconds,
+            // see https://en.wikipedia.org/wiki/JSON_Web_Token#Standard_fields
+            expiry: (response.data.iat + response.data.expires_in) * 1000
+          };
+          this.persistAccessToken();
         })
         .catch(e => {
           console.error(e);
