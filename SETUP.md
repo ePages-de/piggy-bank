@@ -37,10 +37,10 @@ $ vue --version
 Options described in the [online docs](https://cli.vuejs.org/guide/creating-a-project.html#creating-a-project)
 
 ```sh
-$ vue create --no-git --packageManager yarn --default beyond-vuejs-starter
+$ vue create --no-git --packageManager yarn --default piggy-bank
 
 Vue CLI v3.0.1
-✨  Creating project in /Users/jfischer/dev/git/beyond-vuejs-starter.
+✨  Creating project in /Users/jfischer/dev/git/piggy-bank.
 ⚙  Installing CLI plugins. This might take a while...
 
 yarn install v1.9.4
@@ -66,10 +66,10 @@ success Saved lockfile.
 
 📄  Generating README.md...
 
-🎉  Successfully created project beyond-vuejs-starter.
+🎉  Successfully created project piggy-bank.
 👉  Get started with the following commands:
 
- $ cd beyond-vuejs-starter
+ $ cd piggy-bank
  $ yarn serve
 ```
 
@@ -124,8 +124,8 @@ Email [j.fischer@epages.com]:
 Password: ***
 Logged in as j.fischer@epages.com
 
-$ heroku git:remote --app=beyond-vuejs-starter
-set git remote heroku to https://git.heroku.com/beyond-vuejs-starter.git
+$ heroku git:remote --app=beyond-piggy-bank
+set git remote heroku to https://git.heroku.com/beyond-piggy-bank.git
 ```
 
 ## Pinning to node.js version 8

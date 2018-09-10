@@ -39,12 +39,12 @@ $ yarn -v
 
 ### Fork this repository on GitHub
 
-[Fork the repository](https://github.com/jensfischerhh/beyond-vuejs-starter/fork) and clone it onto your local machine:
+[Fork the repository](https://github.com/ePages-de/piggy-bank/fork) and clone it onto your local machine:
 
 ```sh
-$ git clone https://github.com/that-is-your-account/beyond-vuejs-starter.git
+$ git clone https://github.com/that-is-your-account/piggy-bank.git
 
-$ cd beyond-vuejs-starter
+$ cd piggy-bank
 ```
 
 ### Run the application locally
