@@ -60,17 +60,17 @@ export default {
 
   data: function() {
     return {
-      currentPage: 1,
-      totalPages: 10,
+      alerts: [],
       reduction: 15,
       products: [],
-      alerts: []
+      currentPage: 1,
+      totalPages: 10
     };
   },
 
   mounted: function() {
-    console.info(`==== mounted ProductList @ ${this.$options.name}`);
-    this.currentPage = Number(this.page) + 1;
+    console.info("==== mounted ProductList");
+    this.currentPage = Number(this.page) + 1; // TODO use type-safe props
     this.fetchProducts();
   },
 

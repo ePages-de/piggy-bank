@@ -106,7 +106,3 @@ $ git push heroku master
 * [Vetur plugin](https://vuejs.github.io/vetur/) for VS Code
 * [vue-devtools](https://github.com/vuejs/vue-devtools) Chrome Extension
 * [Heroku](https://heroku.com)
-
-### TODOs
-
-* better localstorage state management

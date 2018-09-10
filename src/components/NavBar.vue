@@ -86,7 +86,7 @@ export default {
     },
 
     jwtLink: function() {
-      return this.access_token
+      return this.access_token && this.access_token.bearer
         ? `https://jwt.io/#debugger-io?token=${this.access_token.bearer}`
         : "#";
     },
