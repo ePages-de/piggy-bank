@@ -2,6 +2,16 @@
   <div class="jumbotron">
     <Alerts :alerts="alerts" />
 
+    <b-pagination-nav
+      :useRouter="false"
+      :link-gen="linkGen"
+      :hide-goto-end-buttons="true"
+      :number-of-pages="totalPages"
+      v-model="currentPage"
+      size="md"
+      align="center"
+    />
+
     <div>
       <div class="row">
         <div class="col text-right">
@@ -48,6 +58,8 @@ export default {
 
   data: function() {
     return {
+      currentPage: 1,
+      totalPages: 10,
       reduction: 15,
       products: [],
       alerts: []
@@ -55,10 +67,15 @@ export default {
   },
 
   mounted: function() {
+    this.currentPage = Number(this.page) + 1;
     this.fetchProducts();
   },
 
   methods: {
+    linkGen: function(currentPage) {
+      return `/products?page=${currentPage - 1}&size=${this.size}`;
+    },
+
     fetchProducts: async function() {
       if (this.tokenExpired()) {
         this.$router.push("/authorize");
@@ -83,6 +100,7 @@ export default {
         .request(getProducts)
         .then(response => {
           if (response.status === 200) {
+            this.totalPages = _.get(response, "data.page.totalPages", 5);
             this.products = _.get(response, "data._embedded.products", []);
           } else {
             this.errors.push({

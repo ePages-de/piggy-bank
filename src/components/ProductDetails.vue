@@ -81,13 +81,6 @@ export default {
       3.) add sale tag
     */
     putOnSale: function() {
-      if (this.onSale) {
-        this.alerts.push({
-          message: `product ${this.product.sku} is already on sale`
-        });
-        return;
-      }
-
       const patch = [];
 
       // 1.) store current salesPrice as new listPrice
@@ -126,13 +119,6 @@ export default {
       3.) remove sale tag
     */
     removeFromSale: function() {
-      if (!this.onSale) {
-        this.alerts.push({
-          message: `product ${this.product.sku} is not on sale`
-        });
-        return;
-      }
-
       const patch = [];
 
       // 1.) store current listPrice as new salesPrice

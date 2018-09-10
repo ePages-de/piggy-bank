@@ -111,4 +111,3 @@ $ git push heroku master
 
 * better localstorage state management
 * rename and move GitHub repo
-* paging

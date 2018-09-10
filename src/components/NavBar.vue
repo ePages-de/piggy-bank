@@ -1,5 +1,5 @@
 <template>
-  <b-navbar toggleable="lg" sticky="true" type="dark" variant="secondary">
+  <b-navbar toggleable="lg" :sticky="true" type="dark" variant="secondary">
     <b-navbar-brand to="/">
       <fa icon="piggy-bank" class="piggy-bank" size="2x" spin />
     </b-navbar-brand>
@@ -9,9 +9,16 @@
       <b-nav-item to="/products?page=0&size=20">Products</b-nav-item>
     </b-navbar-nav>
 
-    <!-- Right aligned nav items -->
     <b-navbar-nav class="ml-auto font-weight-bold">
-      <b-nav-item-dropdown text="Links" right>
+      <b-nav-item>
+        <a :href="jwtLink" :class="{ disabled: disableJwtLink }" :disabled="disableJwtLink" target="jwt-debug">
+          <img src="../assets/jwt.svg" alt="JWT" height="50" :class="{ 'grayed-out': disableJwtLink }"/>
+        </a>
+      </b-nav-item>
+      <b-nav-item-dropdown right>
+        <template slot="button-content">
+          <em>Links</em>
+        </template>
         <b-dropdown-item :href="storefrontLink" :disabled="disableStorefrontLink" target="storefront">
           Storefront
         </b-dropdown-item>
@@ -32,12 +39,6 @@
           bootstrap-vue
         </b-dropdown-item>
       </b-nav-item-dropdown>
-
-      <b-navbar-item>
-        <a :href="jwtLink" :class="{ disabled: disableJwtLink }" :disabled="disableJwtLink" target="jwt-debug">
-          <img src="../assets/jwt.svg" alt="JWT" height="50" :class="{ 'grayed-out': disableJwtLink }"/>
-        </a>
-      </b-navbar-item>
     </b-navbar-nav>
   </b-navbar>
 </template>
