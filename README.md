@@ -50,6 +50,7 @@ $ cd beyond-vuejs-starter
 ### Run the application locally
 
 ```sh
+$ yarn install
 $ yarn serve
 yarn run v1.9.4
 $ vue-cli-service serve
