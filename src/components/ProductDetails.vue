@@ -83,19 +83,13 @@ export default {
       3.) add sale tag
     */
     putOnSale: function() {
-      const patch = [];
-
       // 1.) store current salesPrice as new listPrice
       const listPrice = {
         amount: this.product.salesPrice.amount,
         currency: this.product.salesPrice.currency,
         taxModel: this.product.salesPrice.taxModel
       };
-      patch.push({
-        op: "replace",
-        path: "/listPrice",
-        value: listPrice
-      });
+      this.product.listPrice = listPrice;
 
       // 2.) reduce salesPrice by x%
       const salesPrice = {
@@ -103,16 +97,10 @@ export default {
         currency: listPrice.currency,
         taxModel: listPrice.taxModel
       };
-      patch.push({
-        op: "replace",
-        path: "/salesPrice",
-        value: salesPrice
-      });
+      this.product.salesPrice = salesPrice;
 
       // 3.) add sale tag
-      patch.push({ op: "add", path: "/tags/-", value: "sale" });
-
-      this.patchProduct(patch);
+      this.product.tags = ["sale"];
     },
 
     /*
@@ -121,41 +109,19 @@ export default {
       3.) remove sale tag
     */
     removeFromSale: function() {
-      const patch = [];
-
       // 1.) store current listPrice as new salesPrice
       const salesPrice = {
         amount: this.product.listPrice.amount,
         currency: this.product.listPrice.currency,
         taxModel: this.product.listPrice.taxModel
       };
-      patch.push({
-        op: "replace",
-        path: "/salesPrice",
-        value: salesPrice
-      });
+      this.product.salesPrice = salesPrice;
 
       // 2.) remove listPrice
-      patch.push({
-        op: "remove",
-        path: "/listPrice"
-      });
+      this.product.listPrice = null;
 
       // 3.) remove sale tag
-      const saleTagIndex = this.product.tags.findIndex(tag => tag === "sale");
-      patch.push(
-        {
-          op: "test",
-          path: `/tags/${saleTagIndex}`,
-          value: "sale"
-        },
-        {
-          op: "remove",
-          path: `/tags/${saleTagIndex}`
-        }
-      );
-
-      this.patchProduct(patch);
+      this.product.tags = [];
     },
 
     patchProduct: async function(patch) {
