@@ -2,6 +2,9 @@ import Vue from 'vue'
 import router from './router'
 import App from './App.vue'
 
+import Vue2Storage from 'vue2-storage'
+Vue.use(Vue2Storage);
+
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue);
 

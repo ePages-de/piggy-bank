@@ -110,4 +110,3 @@ $ git push heroku master
 ### TODOs
 
 * better localstorage state management
-* rename and move GitHub repo

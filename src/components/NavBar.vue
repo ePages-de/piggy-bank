@@ -45,10 +45,24 @@
 
 <script>
 /* eslint-disable */
-import StorageMixin from "@/mixins/StorageMixin";
+import EventBus from "@/event-bus";
+import AccessTokenMixin from "@/mixins/AccessTokenMixin";
 
 export default {
-  mixins: [StorageMixin],
+  name: "NavBar",
+
+  mixins: [AccessTokenMixin],
+
+  created: function() {
+    EventBus.$on("ACCESS_TOKEN_CHANGED", access_token => {
+      console.log(`---- on ACCESS_TOKEN_CHANGED @ ${this.$options.name}`);
+      this.access_token = access_token;
+    });
+    EventBus.$on("API_URL_CHANGED", api_url => {
+      console.log(`---- on API_URL_CHANGED @ ${this.$options.name}`);
+      this.api_url = api_url;
+    });
+  },
 
   computed: {
     storefrontLink: function() {
@@ -76,10 +90,10 @@ export default {
         ? `https://jwt.io/#debugger-io?token=${this.access_token.bearer}`
         : "#";
     },
-    
+
     disableJwtLink: function() {
       return this.access_token === null;
-    } 
+    }
   }
 };
 </script>

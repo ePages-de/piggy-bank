@@ -45,9 +45,9 @@
       <div class="btn-toolbar">
         <button class="btn btn-primary" v-on:click.prevent="fetchToken">Fetch token</button>
         &nbsp;
-        <button class="btn btn-outline-dark" v-bind:disabled="!access_token" v-on:click.prevent="dismissToken">Dismiss token</button>
+        <button class="btn btn-outline-dark" :disabled="!access_token" v-on:click.prevent="clearAccessToken">Clear token</button>
         &nbsp;
-        <button class="btn btn-outline-danger" v-on:click.prevent="dismissAll">Dismiss all</button>
+        <button class="btn btn-outline-danger" v-on:click.prevent="clearAll">Clear all</button>
       </div>
     </form>
   </div>
@@ -55,12 +55,14 @@
 
 <script>
 /* eslint-disable */
-import StorageMixin from "@/mixins/StorageMixin";
 import Alerts from "@/components/Alerts";
+import AccessTokenMixin from "@/mixins/AccessTokenMixin";
 import axios from "axios";
 
 export default {
-  mixins: [StorageMixin],
+  name: "Authorize",
+
+  mixins: [AccessTokenMixin],
 
   components: {
     Alerts
@@ -68,12 +70,42 @@ export default {
 
   data: function() {
     return {
-      alerts: []
+      alerts: [],
+      client_id: null,
+      client_secret: null
     };
   },
 
+  created: function() {
+    this.client_id = this.$storage.get("client_id", null);
+    this.client_secret = this.$storage.get("client_secret", null);
+  },
+
   methods: {
+    clearAll: function() {
+      this.clearCredentials();
+      this.clearApiUrl();
+      this.clearAccessToken();
+    },
+
+    clearCredentials: function() {
+      this.client_id = null;
+      this.client_secret = null;
+      console.log("Clearing credentials from LocalStorage");
+      this.$storage.remove("client_id");
+      this.$storage.remove("client_secret");
+    },
+
     fetchToken: async function() {
+      if (!this.api_url || !this.client_id || !this.client_secret) {
+        this.alerts.push({ message: "Please enter your credentials" });
+        return;
+      }
+
+      this.persistApiUrl();
+      this.$storage.set("client_id", this.client_id);
+      this.$storage.set("client_secret", this.client_secret);
+
       const postOauthToken = {
         baseURL: this.api_url,
         timeout: 5000,
@@ -101,25 +133,17 @@ export default {
               // see https://en.wikipedia.org/wiki/JSON_Web_Token#Standard_fields
               expiry: (response.data.iat + response.data.expires_in) * 1000
             };
+            this.persistAccessToken();
           } else {
-            this.alerts.push({ message: `error fetching token: ${request.statusText}` });
+            this.alerts.push({
+              message: `error fetching token: ${request.statusText}`
+            });
           }
         })
         .catch(e => {
           console.error(e);
           this.alerts.push({ message: "error fetching token" });
         });
-    },
-
-    dismissToken: function() {
-      this.remove("access_token");
-    },
-
-    dismissAll: function() {
-      this.remove("api_url");
-      this.remove("client_id");
-      this.remove("client_secret");
-      this.remove("access_token");
     }
   }
 };

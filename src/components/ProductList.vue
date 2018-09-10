@@ -40,14 +40,16 @@
 
 <script>
 /* eslint-disable */
-import StorageMixin from "@/mixins/StorageMixin";
+import AccessTokenMixin from "@/mixins/AccessTokenMixin";
 import Alerts from "@/components/Alerts";
 import ProductDetails from "@/components/ProductDetails";
 import axios from "axios";
 import _ from "lodash";
 
 export default {
-  mixins: [StorageMixin],
+  name: "ProductList",
+
+  mixins: [AccessTokenMixin],
 
   components: {
     Alerts,
@@ -67,6 +69,7 @@ export default {
   },
 
   mounted: function() {
+    console.info(`==== mounted ProductList @ ${this.$options.name}`);
     this.currentPage = Number(this.page) + 1;
     this.fetchProducts();
   },
@@ -77,7 +80,7 @@ export default {
     },
 
     fetchProducts: async function() {
-      if (this.tokenExpired()) {
+      if (this.isAccessTokenExpired()) {
         this.$router.push("/authorize");
       }
 

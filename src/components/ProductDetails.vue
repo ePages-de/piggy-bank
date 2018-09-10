@@ -24,14 +24,16 @@
 
 <script>
 /* eslint-disable */
-import StorageMixin from "@/mixins/StorageMixin";
+import AccessTokenMixin from "@/mixins/AccessTokenMixin";
 import axios from "axios";
 import numeral from "numeral";
 import uriTemplates from "uri-templates";
 import _ from "lodash";
 
 export default {
-  mixins: [StorageMixin],
+  name: "ProductDetails",
+
+  mixins: [AccessTokenMixin],
 
   props: ["product", "reduction", "alerts"],
 
@@ -157,6 +159,10 @@ export default {
     },
 
     patchProduct: async function(patch) {
+      if (this.isAccessTokenExpired()) {
+        this.$router.push("/authorize");
+      }
+
       const patchProduct = {
         baseURL: this.api_url,
         timeout: 5000,
@@ -208,7 +214,8 @@ export default {
   height: 80%;
 }
 
-.sale, .sale .card-footer {
+.sale,
+.sale .card-footer {
   background-color: lightpink !important;
 }
 

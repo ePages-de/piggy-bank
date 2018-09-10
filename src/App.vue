@@ -12,6 +12,8 @@
 import NavBar from "@/components/NavBar";
 
 export default {
+  name: "App",
+
   components: {
     NavBar
   }
@@ -22,10 +24,12 @@ export default {
 .piggy-bank {
   color: lightpink !important;
 }
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>
