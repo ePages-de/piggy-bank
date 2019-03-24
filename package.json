@@ -10,8 +10,8 @@
     "start": "node server.js"
   },
   "engines": {
-    "node": "8.11.x",
-    "yarn": "1.9.4"
+    "node": "8.12.x",
+    "yarn": "1.10.x"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.4",
